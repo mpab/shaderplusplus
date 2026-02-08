@@ -1,0 +1,2 @@
+Copyright for shader code belongs to the authors as indicated in each shader file.
+I claim no authorship and confer no distribution rights apart from those implicit in the original publication.

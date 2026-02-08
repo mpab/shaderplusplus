@@ -1,0 +1,3 @@
+Copyright for Raylib code belongs to the authors as indicated in each directory.
+I claim no authorship and confer no distribution rights apart from those implicit in the original publication.
+Fair-use rules apply.

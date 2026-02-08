@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+cd generated || exit
+ffmpeg -i frame-%03d.ppm -r 60 video.mp4

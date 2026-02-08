@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+cd generated || exit
+mpv --mf-fps=60  mf://*.ppm

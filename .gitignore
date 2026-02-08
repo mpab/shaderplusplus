@@ -1,0 +1,6 @@
+**/bin*
+**/generated*
+*.log
+**/.DS_Store
+**/.clang-format
+**/.clangd
