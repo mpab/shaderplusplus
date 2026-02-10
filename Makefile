@@ -154,7 +154,7 @@ run-all-tests: run-test-glsl run-test-tasks ## build, then run all tests
 
 .PHONY: configure
 configure:
-ifeq ($(DISTRO_NAME), xLinux)
+ifeq ($(DISTRO_NAME), Linux)
 	@echo "Configuring for Linux"
 CXXFLAGS := -std=c++20 -Wall -I"$(SRCDIR)" -I"$(SRCLIBDIR)" 
 LDFLAGS := -lX11 -lGL -lpthread -lm -lstdc++ 
