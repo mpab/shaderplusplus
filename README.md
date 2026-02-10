@@ -1,6 +1,8 @@
-# A software implementation of GLSL in C++ [![on-push (checkout, build, test)](https://github.com/mpab/shaderplusplus/actions/workflows/on-push.yml/badge.svg)](https://github.com/mpab/shaderplusplus/actions/workflows/on-push.yml)
+# A software implementation of GLSL in C++
 
-- Inspired by tsoding's [Graphics API is irrelevant](https://www.youtube.com/watch?v=xNX9H_ZkfNE)
+[![on-push (checkout, build, test)](https://github.com/mpab/shaderplusplus/actions/workflows/on-push.yml/badge.svg)](https://github.com/mpab/shaderplusplus/actions/workflows/on-push.yml)
+
+Inspired by tsoding's [Graphics API is irrelevant](https://www.youtube.com/watch?v=xNX9H_ZkfNE)
 
 [shader-plasma-tsoding.cpp](./src/shaders/shader-plasma-tsoding.cpp)
 
