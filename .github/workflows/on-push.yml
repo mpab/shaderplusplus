@@ -30,7 +30,7 @@ jobs:
       - run: echo "💡 Job ${{ github.job }} - ${{ github.repository }} cloned to ${{ runner.os }}."
       - name: Install toolchain
         run: |
-            sudo apt-get update && sudo apt-get install -y build-essential llvm clang
+            sudo apt-get update && sudo apt-get install -y build-essential llvm clang libgl1-mesa-dev
       - run: echo "💡 Job ${{ github.job }} - ${{ github.repository }} toolchain installed"
       - name: run-all-tests
         run: |
