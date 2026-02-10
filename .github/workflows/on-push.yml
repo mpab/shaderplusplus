@@ -13,7 +13,7 @@ jobs:
       - run: echo "💡 Job ${{ github.job }} - ${{ github.repository }} cloned to ${{ runner.os }}."
       - name: Install toolchain
         run: |
-            apt-get update && apt-get upgrade -y && apt-get install -y build-essential llvm clang libgl1-mesa-dev
+            sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install -y build-essential llvm clang libgl1-mesa-dev
       - run: echo "💡 Job ${{ github.job }} - ${{ github.repository }} toolchain installed"
       - name: build raylib gui
         run: |
@@ -30,7 +30,7 @@ jobs:
       - run: echo "💡 Job ${{ github.job }} - ${{ github.repository }} cloned to ${{ runner.os }}."
       - name: Install toolchain
         run: |
-            apt-get update && apt-get upgrade -y && apt-get install -y build-essential llvm clang libgl1-mesa-dev
+            sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install -y build-essential llvm clang libgl1-mesa-dev
       - run: echo "💡 Job ${{ github.job }} - ${{ github.repository }} toolchain installed"
       - name: run-all-tests
         run: |
