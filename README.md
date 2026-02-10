@@ -11,7 +11,7 @@ Inspired by tsoding's [Graphics API is irrelevant](https://www.youtube.com/watch
 ### Tested on
 
 - Linux
-- macOS [see note on macOS](#macos-build---sdkroot)
+- macOS
 - Windows (Mingw64)
 
 There are slight variations in configured required for the tested platforms, and I can't test every variation. So if you, Dear Reader, find a platform-related issue, kindly submit feedback via a pull request.
@@ -34,7 +34,7 @@ The code can be built into three applications
 For convenience, I have supplied some pre-baked build scripts.  
 They should work... but no guarantees as my focus is on maintaining the Makefile.  
 The console and raylib applications should build as-is.  
-For the SDL3 gui, see the [SDL note below](#sdl-gui-application)
+For the SDL3 gui, see the [SDL note below](#sdl)
 
 - for Linux
 
@@ -133,8 +133,8 @@ Only supported by the PRC.
 ### Arch-likes
 
 ```sh
-sudo pacman -Sy mpv
-sudo pacman -Sy ffmpeg
+sudo pacman -S mpv
+sudo pacman -S ffmpeg
 ```
 
 ### MinGW64 on Windows 11
@@ -217,7 +217,7 @@ export PATH="$PATH:$SDL3_DIR/bin"
 
 ## Issues you may have
 
-### I'm on $System with $CPUArchitecture and I can't build anything
+### configure - unknown/unsupported environment: ...
 
 [Makefile](./Makefile)
 
