@@ -1,0 +1,38 @@
+name: on-push (checkout, build, test)
+run-name: ${{ github.actor }} is building and testing ${{ github.repository }} 🚀
+on: [push]
+jobs:
+  build-ray:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "🎉 Job ${{ github.job }} - automatically triggered by event - ${{ github.event_name }}."
+      - run: echo "🐧 Job ${{ github.job }} - running on ${{ runner.os }}"
+      - run: echo "🔎 Job ${{ github.job }} - branch ${{ github.ref }}"
+      - name: Check out repository code
+        uses: actions/checkout@v5
+      - run: echo "💡 Job ${{ github.job }} - ${{ github.repository }} cloned to ${{ runner.os }}."
+      - name: Install toolchain
+        run: |
+            apt-get update && apt-get upgrade -y && apt-get install -y build-essential llvm clang libgl1-mesa-dev
+      - run: echo "💡 Job ${{ github.job }} - ${{ github.repository }} toolchain installed"
+      - name: build raylib gui
+        run: |
+          make build-ray
+      - run: echo "🍏 Job ${{ github.job }} status - ${{ job.status }}."
+  run-all-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "🎉 Job ${{ github.job }} - automatically triggered by event - ${{ github.event_name }}."
+      - run: echo "🐧 Job ${{ github.job }} - running on ${{ runner.os }}"
+      - run: echo "🔎 Job ${{ github.job }} - branch ${{ github.ref }}"
+      - name: Check out repository code
+        uses: actions/checkout@v5
+      - run: echo "💡 Job ${{ github.job }} - ${{ github.repository }} cloned to ${{ runner.os }}."
+      - name: Install toolchain
+        run: |
+            apt-get update && apt-get upgrade -y && apt-get install -y build-essential llvm clang libgl1-mesa-dev
+      - run: echo "💡 Job ${{ github.job }} - ${{ github.repository }} toolchain installed"
+      - name: run-all-tests
+        run: |
+          make run-all-tests
+      - run: echo "🍏 Job ${{ github.job }} status - ${{ job.status }}."
