@@ -1,6 +1,8 @@
 # A software implementation of GLSL in C++
 
-[![on-push (checkout, build, test)](https://github.com/mpab/shaderplusplus/actions/workflows/on-push.yml/badge.svg)](https://github.com/mpab/shaderplusplus/actions/workflows/on-push.yml)
+Github Status: [![on-push (checkout, build, test)](https://github.com/mpab/shaderplusplus/actions/workflows/on-push.yml/badge.svg)](https://github.com/mpab/shaderplusplus/actions/workflows/on-push.yml)
+
+Gitlab Status: [![pipeline status](https://gitlab.com/mpab/shaderplusplus/badges/main/pipeline.svg)](https://gitlab.com/mpab/shaderplusplus/-/commits/main)
 
 Inspired by tsoding's [Graphics API is irrelevant](https://www.youtube.com/watch?v=xNX9H_ZkfNE)
 
@@ -112,7 +114,7 @@ make run-con
 
 ## Installing Dependencies
 
-- a clang++ compatible buildchain
+- a g++/clang++ compatible buildchain
 - make for the Makefile builds
 - SDL3 for the SDL3 GUI
 - mpv and ffmpeg for some features of the console app scripts
@@ -346,15 +348,15 @@ It's a basic version, but it works.
 
 ```sh
 # inspect the build command line
-make echo-build-ray | grep clang | sed 's|echo-build-|./bin/|'
-make echo-build-con | grep clang | sed 's|echo-build-|./bin/|'
-make echo-build-sdl | grep clang | sed 's|echo-build-|./bin/|'
+make echo-build-ray | grep g++ | sed 's|echo-build-|./bin/|'
+make echo-build-con | grep g++ | sed 's|echo-build-|./bin/|'
+make echo-build-sdl | grep g++ | sed 's|echo-build-|./bin/|'
 
 # you could even...
 mkdir -p ./bin
-$(make echo-build-ray | grep clang | sed 's|echo-build-|./bin/|')
-$(make echo-build-con | grep clang | sed 's|echo-build-|./bin/|')
-$(make echo-build-sdl | grep clang | sed 's|echo-build-|./bin/|')
+$(make echo-build-ray | grep g++ | sed 's|echo-build-|./bin/|')
+$(make echo-build-con | grep g++ | sed 's|echo-build-|./bin/|')
+$(make echo-build-sdl | grep g++ | sed 's|echo-build-|./bin/|')
 cp ./assets/* ./bin/
 ```
 

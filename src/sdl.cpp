@@ -11,7 +11,7 @@
 #include "config.h"
 #include "sdl-text.h"
 #include "shaders-select.cpp"
-#include "shfl-glsl-include.h"  // IWYU pragma: keep
+#include "shfl-glsl-include.h" // IWYU pragma: keep
 
 using namespace glsl_example;
 
@@ -20,9 +20,9 @@ static Uint32 abgr8_buffer[ABGR8_BUFF_LEN];
 auto constexpr ABGR8_BUFF_SIZE_BYTES = cfg::W * cfg::H * sizeof(Uint32);
 
 struct AppContext {
-  SDL_Window* window;
-  SDL_Renderer* renderer;
-  SDL_Texture* texture;
+  SDL_Window *window;
+  SDL_Renderer *renderer;
+  SDL_Texture *texture;
   SDL_FRect texture_rect;
   SDL_AppResult app_quit = SDL_APP_CONTINUE;
   shfl::threading::Workers render_pool;
@@ -37,7 +37,7 @@ SDL_AppResult SDL_Fail() {
   return SDL_APP_FAILURE;
 }
 
-SDL_AppResult SDL_AppInit(void** appstate, int argc, char* argv[]) {
+SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[]) {
   // init the library, here we make a window so we only need the Video
   // capabilities.
   if (not SDL_Init(SDL_INIT_VIDEO)) {
@@ -49,18 +49,18 @@ SDL_AppResult SDL_AppInit(void** appstate, int argc, char* argv[]) {
   }
 
   // create a window
-  SDL_Window* window = SDL_CreateWindow("Plasma", cfg::W, cfg::H, 0);
+  SDL_Window *window = SDL_CreateWindow("Plasma", cfg::W, cfg::H, 0);
   if (not window) {
     return SDL_Fail();
   }
 
   // create a renderer
-  SDL_Renderer* renderer = SDL_CreateRenderer(window, NULL);
+  SDL_Renderer *renderer = SDL_CreateRenderer(window, NULL);
   if (not renderer) {
     return SDL_Fail();
   }
 
-  SDL_Texture* texture =
+  SDL_Texture *texture =
       SDL_CreateTexture(renderer, SDL_PIXELFORMAT_ABGR8888,
                         SDL_TEXTUREACCESS_STREAMING, cfg::W, cfg::H);
   SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_NONE);
@@ -103,15 +103,15 @@ SDL_AppResult SDL_AppInit(void** appstate, int argc, char* argv[]) {
                      .info_countdown = cfg::info_countdown_init};
 
   if (cfg::SDL_VSYNC)
-    SDL_SetRenderVSync(renderer, -1);  // enable vysnc
+    SDL_SetRenderVSync(renderer, -1); // enable vysnc
 
   SDL_Log("Application started successfully!");
 
   return SDL_APP_CONTINUE;
 }
 
-SDL_AppResult SDL_AppEvent(void* appstate, SDL_Event* event) {
-  auto* app = (AppContext*)appstate;
+SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event) {
+  auto *app = (AppContext *)appstate;
 
   if (event->type == SDL_EVENT_QUIT) {
     app->app_quit = SDL_APP_SUCCESS;
@@ -127,8 +127,8 @@ SDL_AppResult SDL_AppEvent(void* appstate, SDL_Event* event) {
   return SDL_APP_CONTINUE;
 }
 
-SDL_AppResult SDL_AppIterate(void* appstate) {
-  auto* app = (AppContext*)appstate;
+SDL_AppResult SDL_AppIterate(void *appstate) {
+  auto *app = (AppContext *)appstate;
 
   auto ticks_ms = SDL_GetTicks();
 
@@ -145,55 +145,56 @@ SDL_AppResult SDL_AppIterate(void* appstate) {
   std::string buffer_display_mode = " (no buffer)";
 
   switch (cfg::sdl_buffer_display_mode) {
-    case cfg::SDL_BUFFER_DISPLAY_NONE:
-    default:
-      break;
+  case cfg::SDL_BUFFER_DISPLAY_NONE:
+  default:
+    break;
 
-    case cfg::SDL_BUFFER_COPY_PIXEL:
-      buffer_display_mode = " (buffer pixel copy)";
-      for (auto line = 0; line != cfg::H; ++line) {
-        for (auto col = 0; col != cfg::W; ++col) {
-          auto r = ppm_buffer[0];
-          auto g = ppm_buffer[1];
-          auto b = ppm_buffer[2];
-          auto a = ppm_buffer[3];
-          ppm_buffer += shfl::glsl::sz_Fragment;
-          SDL_SetRenderDrawColor(app->renderer, r, g, b, a);
-          SDL_RenderPoint(app->renderer, (float)col, float(line));
-        }
-      }
-      break;
-    case cfg::SDL_BUFFER_TO_TEXTURE_BYTE_COPY: {
-      buffer_display_mode = " (buffer byte copy to texture)";
-      for (auto idx = 0; idx != ABGR8_BUFF_LEN; ++idx) {
-        // re-order this logic as (or if) required
-        abgr8_buffer[idx] = ppm_buffer[0] + (ppm_buffer[1] << 8) +
-                            (ppm_buffer[2] << 16) + (ppm_buffer[3] << 24);
+  case cfg::SDL_BUFFER_COPY_PIXEL:
+    buffer_display_mode = " (buffer pixel copy)";
+    for (auto line = 0; line != cfg::H; ++line) {
+      for (auto col = 0; col != cfg::W; ++col) {
+        auto r = ppm_buffer[0];
+        auto g = ppm_buffer[1];
+        auto b = ppm_buffer[2];
+        auto a = ppm_buffer[3];
         ppm_buffer += shfl::glsl::sz_Fragment;
+        SDL_SetRenderDrawColor(app->renderer, r, g, b, a);
+        SDL_RenderPoint(app->renderer, (float)col, float(line));
       }
+    }
+    break;
+  case cfg::SDL_BUFFER_TO_TEXTURE_BYTE_COPY: {
+    buffer_display_mode = " (buffer byte copy to texture)";
+    for (auto idx = 0; idx != ABGR8_BUFF_LEN; ++idx) {
+      // re-order this logic as (or if) required
+      abgr8_buffer[idx] = ppm_buffer[0] + (ppm_buffer[1] << 8) +
+                          (ppm_buffer[2] << 16) + (ppm_buffer[3] << 24);
+      ppm_buffer += shfl::glsl::sz_Fragment;
+    }
 
-      int pitch;
-      void* pixels;
-      SDL_LockTexture(app->texture, NULL, &pixels, &pitch);
-      SDL_memcpy(pixels, abgr8_buffer, ABGR8_BUFF_SIZE_BYTES);
-      SDL_UnlockTexture(app->texture);
-      SDL_RenderTexture(app->renderer, app->texture, NULL, NULL);
-    } break;
+    int pitch;
+    void *pixels;
+    SDL_LockTexture(app->texture, NULL, &pixels, &pitch);
+    SDL_memcpy(pixels, abgr8_buffer, ABGR8_BUFF_SIZE_BYTES);
+    SDL_UnlockTexture(app->texture);
+    SDL_RenderTexture(app->renderer, app->texture, NULL, NULL);
+  } break;
 
-    case cfg::SDL_BUFFER_TO_TEXTURE_BLOCK_COPY: {
-      buffer_display_mode = " (buffer block copy to texture)";
-      int pitch;
-      void* pixels;
-      SDL_LockTexture(app->texture, NULL, &pixels, &pitch);
-      SDL_memcpy(pixels, ppm_buffer, ABGR8_BUFF_SIZE_BYTES);
-      SDL_UnlockTexture(app->texture);
-      SDL_RenderTexture(app->renderer, app->texture, NULL, NULL);
-    } break;
+  case cfg::SDL_BUFFER_TO_TEXTURE_BLOCK_COPY: {
+    buffer_display_mode = " (buffer block copy to texture)";
+    int pitch;
+    void *pixels;
+    SDL_LockTexture(app->texture, NULL, &pixels, &pitch);
+    SDL_memcpy(pixels, ppm_buffer, ABGR8_BUFF_SIZE_BYTES);
+    SDL_UnlockTexture(app->texture);
+    SDL_RenderTexture(app->renderer, app->texture, NULL, NULL);
+  } break;
   }
 
   if (!si.name.empty()) {
-    sdl3::text::render(app->renderer,
-                       std::format("{} - {}", si.name, buffer_display_mode));
+    std::stringstream desc;
+    desc << si.name.c_str() << " - " << buffer_display_mode;
+    sdl3::text::render(app->renderer, desc.str());
   }
   if (app->info_countdown > 1) {
     if (app->info_countdown > 1) {
@@ -204,18 +205,11 @@ SDL_AppResult SDL_AppIterate(void* appstate) {
 
   SDL_RenderPresent(app->renderer);
 
-  if (app->frame >= cfg::MAX_FRAMES) {
-    if (!cfg::SDL_REPEAT_ANIMATION)
-      app->app_quit = SDL_APP_SUCCESS;
-    else
-      app->frame = 0;
-  }
-
   return app->app_quit;
 }
 
-void SDL_AppQuit(void* appstate, SDL_AppResult result) {
-  auto* app = (AppContext*)appstate;
+void SDL_AppQuit(void *appstate, SDL_AppResult result) {
+  auto *app = (AppContext *)appstate;
   if (app) {
     SDL_DestroyRenderer(app->renderer);
     SDL_DestroyWindow(app->window);

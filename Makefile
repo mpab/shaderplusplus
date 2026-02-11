@@ -25,7 +25,7 @@ CON-APPNAME := console
 TEST-GLSL-APPNAME := test-glsl
 TEST-TASKS-APPNAME := test-tasks
 
-CC = clang++
+CC = g++
 SRCEXT := .c*
 HDREXT := .h*
 SRCDIR := $(PROJECT_PATH)/src
@@ -70,7 +70,7 @@ build: build-ray ## (default) redirects to build-ray
 
 run: run-ray ## redirects to run-ray
 
-test: run-glsl-test ## redirects to run-glsl-test
+test: run-test-glsl ## redirects to run-test-glsl
 
 # IMPORTANT! src/object commands come first on Mingw64
 # ensure "-o $@ $^" is at the start of the expression
@@ -157,7 +157,7 @@ configure:
 ifeq ($(DISTRO_NAME), Linux)
 	@echo "Configuring for Linux"
 CXXFLAGS := -std=c++20 -Wall -I"$(SRCDIR)" -I"$(SRCLIBDIR)" 
-LDFLAGS := -lX11 -lGL -lpthread -lm -lstdc++ 
+LDFLAGS := -lX11 -lGL -lpthread -lm -lstdc++
 SDL_FLAGS := -I"$(SDL3_DIR)/include" -lSDL3 -lSDL3_image -lSDL3_mixer -lSDL3_ttf -L"$(SDL3_DIR)/lib"
 RAY_FLAGS := -I./lib/raylib-5.5_linux_amd64/include/ -L./lib/raylib-5.5_linux_amd64/lib/ -l:libraylib.a
 # endif

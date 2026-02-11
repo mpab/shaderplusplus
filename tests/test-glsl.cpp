@@ -2,7 +2,7 @@
 #include <cassert>
 #include <cstdio>
 
-#include "shfl-glsl-include.h"  // IWYU pragma: keep
+#include "shfl-glsl-include.h" // IWYU pragma: keep
 
 using namespace shfl::glsl;
 
@@ -12,8 +12,7 @@ static int current_passed, current_failed, total_passed, total_failed = 0;
 static bool approximate_comparison = false;
 static bool quiet = false;
 
-template <typename T>
-void fmt_print_vf(const T& v, bool LF = true) {
+template <typename T> void fmt_print_vf(const T &v, bool LF = true) {
   for (size_t i = 0; i != v.size(); ++i) {
     auto f = v.get(i);
     if (!i) {
@@ -30,7 +29,7 @@ void fmt_print_vf(const T& v, bool LF = true) {
 }
 
 template <typename T1, typename T2>
-bool check_if_equal_vf(const T1& v1, const T2& v2, bool log = true) {
+bool check_if_equal_vf(const T1 &v1, const T2 &v2, bool log = true) {
   if (log) {
     printf("V");
     fmt_print_vf(v1);
@@ -54,7 +53,7 @@ bool check_if_equal_vf(const T1& v1, const T2& v2, bool log = true) {
     auto v2v = v2.get(i);
     if (!approximate_comparison) {
       equal = (v1v == v2v);
-    } else {  // if (approximate_comparison)
+    } else { // if (approximate_comparison)
       int f1 = v1.get(i) * 1000;
       int f2 = v2.get(i) * 1000;
       equal = !(abs(f1 - f2) > 1);
@@ -71,55 +70,55 @@ bool check_if_equal_vf(const T1& v1, const T2& v2, bool log = true) {
 
 #define USE(STMT) STMT = STMT
 
-#define CHECK_INIT(STMNT, CHECKVEC, VEC)                          \
-  if (!quiet) {                                                   \
-    printf("%s\n", #STMNT);                                       \
-  }                                                               \
-  STMNT;                                                          \
-  {                                                               \
-    bool status = check_if_equal_vf(VEC, CHECKVEC, !quiet);       \
-    if (status)                                                   \
-      current_passed++;                                           \
-    else {                                                        \
-      printf("%s:%d - PROBLEM %s\n", __FILE__, __LINE__, #STMNT); \
-      check_if_equal_vf(VEC, CHECKVEC);                           \
-      current_failed++;                                           \
-    }                                                             \
+#define CHECK_INIT(STMNT, CHECKVEC, VEC)                                       \
+  if (!quiet) {                                                                \
+    printf("%s\n", #STMNT);                                                    \
+  }                                                                            \
+  STMNT;                                                                       \
+  {                                                                            \
+    bool status = check_if_equal_vf(VEC, CHECKVEC, !quiet);                    \
+    if (status)                                                                \
+      current_passed++;                                                        \
+    else {                                                                     \
+      printf("%s:%d - PROBLEM %s\n", __FILE__, __LINE__, #STMNT);              \
+      check_if_equal_vf(VEC, CHECKVEC);                                        \
+      current_failed++;                                                        \
+    }                                                                          \
   }
 
-#define CHECK(STMNT, CHECKVEC, VEC)                               \
-  if (!quiet) {                                                   \
-    printf("%s\n", #STMNT);                                       \
-    printf("O");                                                  \
-    fmt_print_vf(VEC);                                            \
-  }                                                               \
-  STMNT;                                                          \
-  {                                                               \
-    bool status = check_if_equal_vf(VEC, CHECKVEC, !quiet);       \
-    if (status)                                                   \
-      current_passed++;                                           \
-    else {                                                        \
-      printf("%s:%d - PROBLEM %s\n", __FILE__, __LINE__, #STMNT); \
-      check_if_equal_vf(VEC, CHECKVEC);                           \
-      current_failed++;                                           \
-    }                                                             \
+#define CHECK(STMNT, CHECKVEC, VEC)                                            \
+  if (!quiet) {                                                                \
+    printf("%s\n", #STMNT);                                                    \
+    printf("O");                                                               \
+    fmt_print_vf(VEC);                                                         \
+  }                                                                            \
+  STMNT;                                                                       \
+  {                                                                            \
+    bool status = check_if_equal_vf(VEC, CHECKVEC, !quiet);                    \
+    if (status)                                                                \
+      current_passed++;                                                        \
+    else {                                                                     \
+      printf("%s:%d - PROBLEM %s\n", __FILE__, __LINE__, #STMNT);              \
+      check_if_equal_vf(VEC, CHECKVEC);                                        \
+      current_failed++;                                                        \
+    }                                                                          \
   }
 
-#define CHECKN(STMNT, CHECKVEC, VEC)                              \
-  if (!quiet) {                                                   \
-    printf("%s\n", #STMNT);                                       \
-    printf("O");                                                  \
-    fmt_print_vf(VEC);                                            \
-  }                                                               \
-  {                                                               \
-    bool status = check_if_equal_vf(VEC, CHECKVEC, !quiet);       \
-    if (status)                                                   \
-      current_passed++;                                           \
-    else {                                                        \
-      printf("%s:%d - PROBLEM %s\n", __FILE__, __LINE__, #STMNT); \
-      check_if_equal_vf(VEC, CHECKVEC);                           \
-      current_failed++;                                           \
-    }                                                             \
+#define CHECKN(STMNT, CHECKVEC, VEC)                                           \
+  if (!quiet) {                                                                \
+    printf("%s\n", #STMNT);                                                    \
+    printf("O");                                                               \
+    fmt_print_vf(VEC);                                                         \
+  }                                                                            \
+  {                                                                            \
+    bool status = check_if_equal_vf(VEC, CHECKVEC, !quiet);                    \
+    if (status)                                                                \
+      current_passed++;                                                        \
+    else {                                                                     \
+      printf("%s:%d - PROBLEM %s\n", __FILE__, __LINE__, #STMNT);              \
+      check_if_equal_vf(VEC, CHECKVEC);                                        \
+      current_failed++;                                                        \
+    }                                                                          \
   }
 
 #define TEST_ADD 1
@@ -129,7 +128,7 @@ bool check_if_equal_vf(const T1& v1, const T2& v2, bool log = true) {
 #define TEST_MATH 1
 #define TEST_SWIZZLE 1
 
-void banner(const char* msg, bool _noisy_logging = false) {
+void banner(const char *msg, bool _noisy_logging = false) {
   printf("========================================\n");
   printf("%s\n", msg);
   current_passed = current_failed = 0;
@@ -199,9 +198,9 @@ int main() {
   CHECK(v2f_1 += 1., vec2(2., 2.), v2f_1);
   CHECK(v2f_1 = vec2(-1, -2), vec2(-1., -2.), v2f_1);
   CHECK(v2f_1 += -1., vec2(-2., -3.), v2f_1);
-  v2f_1 = 1.;  // should fail with a dimension mismatch
+  v2f_1 = 1.; // should fail with a dimension mismatch
   summary();
-#endif  // TEST_ADD
+#endif // TEST_ADD
 
 #if TEST_SUB
   banner("SUBTRACTION");
@@ -213,7 +212,7 @@ int main() {
   // auto v4s = v4f_1 - v4f_2;
   // fmt_print_vf(v4s);
 
-  CHECK(v2f_1 = vec2({1., 2.}), vec2(1, 2), v2f_1);
+  CHECK(v2f_1 = vec2(1., 2.), vec2(1, 2), v2f_1);
   CHECK(v2f_2 = vec2(3., 4.), vec2(3, 4), v2f_2);
   CHECK(v2f_2 = v2f_2 - v2f_1, vec2(2, 2), v2f_2);
   CHECK(v2f_2 -= 2., vec2(0., 0.), v2f_2);
@@ -230,7 +229,7 @@ int main() {
   // not yet supported
   // CHECK(v2 = -v2, vec2(1, 2), v2);
   summary();
-#endif  // TEST_SUB
+#endif // TEST_SUB
 
 #if TEST_MUL
   banner("MULTIPLICATION");
@@ -288,24 +287,24 @@ int main() {
     CHECKN(u_resolution, vec4(640, 480, 0, 0), u_resolution);
     // CHECK(gl_FragCoord *= scale, u_resolution, gl_FragCoord);
 
-    gl_FragCoord = vec4({320., 240., 0., 0.});
+    gl_FragCoord = vec4(320., 240., 0., 0.);
     gl_FragCoord.set(0, gl_FragCoord.get(0) * scale.get(0));
     gl_FragCoord.set(1, gl_FragCoord.get(1) * scale.get(1));
     CHECKN(gl_FragCoord, u_resolution, gl_FragCoord);
 
-    gl_FragCoord = vec4({320., 240., 0., 0.});
+    gl_FragCoord = vec4(320., 240., 0., 0.);
     gl_FragCoord.x = gl_FragCoord.x * scale.x;
     gl_FragCoord.y = gl_FragCoord.y * scale.y;
     CHECKN(gl_FragCoord, u_resolution, gl_FragCoord);
 
-    gl_FragCoord = vec4({320., 240., 0., 0.});
+    gl_FragCoord = vec4(320., 240., 0., 0.);
     gl_FragCoord.x *= scale.x;
     gl_FragCoord.y *= scale.y;
     CHECKN(gl_FragCoord, u_resolution, gl_FragCoord);
   }
 
   summary();
-#endif  // TEST_MUL
+#endif // TEST_MUL
 
 #if TEST_DIV
   banner("DIVISION");
@@ -367,24 +366,24 @@ int main() {
     CHECKN(u_resolution, vec4(640, 480, 0, 0), u_resolution);
     // CHECK(gl_FragCoord *= scale, u_resolution, gl_FragCoord);
 
-    gl_FragCoord = vec4({320., 240., 0., 0.});
+    gl_FragCoord = vec4(320., 240., 0., 0.);
     gl_FragCoord.set(0, gl_FragCoord.get(0) / scale.get(0));
     gl_FragCoord.set(1, gl_FragCoord.get(1) / scale.get(1));
     CHECKN(gl_FragCoord, u_resolution, gl_FragCoord);
 
-    gl_FragCoord = vec4({320., 240., 0., 0.});
+    gl_FragCoord = vec4(320., 240., 0., 0.);
     gl_FragCoord.x = gl_FragCoord.x / scale.x;
     gl_FragCoord.y = gl_FragCoord.y / scale.y;
     CHECKN(gl_FragCoord, u_resolution, gl_FragCoord);
 
-    gl_FragCoord = vec4({320., 240., 0., 0.});
+    gl_FragCoord = vec4(320., 240., 0., 0.);
     gl_FragCoord.x /= scale.x;
     gl_FragCoord.y /= scale.y;
     CHECKN(gl_FragCoord, u_resolution, gl_FragCoord);
   }
 
   summary();
-#endif  // TEST_DIV
+#endif // TEST_DIV
 
 #if TEST_MATH
   banner("VECTOR MATH");
@@ -394,7 +393,7 @@ int main() {
   CHECK(v2f_1 = fract(v2f_1), vec2(.5, .5), v2f_1);
   CHECK(v2f_1 = fract(fr), vec2(.5, .5), v2f_1);
   summary();
-#endif  // TEST_MATH
+#endif // TEST_MATH
 
 #if TEST_SWIZZLE
   banner("SWIZZLING");
@@ -440,16 +439,16 @@ int main() {
     vec2 u_resolution = vec2(640, 480);
     CHECK(gl_FragCoord *= scale, u_resolution, gl_FragCoord);
 
-    gl_FragCoord = vec2({320, 240});
+    gl_FragCoord = vec2(320, 240);
     gl_FragCoord.xy = gl_FragCoord.xy * scale.xy;
     CHECKN(gl_FragCoord.xy, u_resolution.xy, gl_FragCoord.xy);
 
-    gl_FragCoord = vec2({320, 240});
+    gl_FragCoord = vec2(320, 240);
     gl_FragCoord *= scale.xy;
     CHECKN(gl_FragCoord.xy, u_resolution.xy, gl_FragCoord.xy);
 
     // To Be Implemented?
-    // gl_FragCoord = vec2({320, 240});
+    // gl_FragCoord = vec2(320, 240);
     // gl_FragCoord.xy *= scale.xy;
     // CHECKN(gl_FragCoord.xy, u_resolution.xy, gl_FragCoord.xy);
   }
@@ -483,21 +482,21 @@ int main() {
     vec2 u_resolution = vec2(640, 480);
     CHECK(gl_FragCoord /= scale, u_resolution, gl_FragCoord);
 
-    gl_FragCoord = vec2({320, 240});
+    gl_FragCoord = vec2(320, 240);
     gl_FragCoord.xy = gl_FragCoord.xy / scale.xy;
     CHECKN(gl_FragCoord.xy, u_resolution.xy, gl_FragCoord.xy);
 
-    gl_FragCoord = vec2({320, 240});
+    gl_FragCoord = vec2(320, 240);
     gl_FragCoord /= scale.xy;
     CHECKN(gl_FragCoord.xy, u_resolution.xy, gl_FragCoord.xy);
 
     // To Be Implemented?
-    // gl_FragCoord = vec2({320, 240});
+    // gl_FragCoord = vec2(320, 240);
     // gl_FragCoord.xy /= scale;
     // CHECKN(gl_FragCoord.xy, u_resolution.xy, gl_FragCoord.xy);
 
     // To Be Implemented?
-    // gl_FragCoord = vec2({320, 240});
+    // gl_FragCoord = vec2(320, 240);
     // gl_FragCoord.xy /= scale.xy;
     // CHECKN(gl_FragCoord.xy, u_resolution.xy, gl_FragCoord.xy);
   }
@@ -515,18 +514,18 @@ int main() {
     gl_FragCoord.xy = gl_FragCoord.xy / scale.xy;
     CHECKN(gl_FragCoord.xy, u_resolution.xy, gl_FragCoord.xy);
 
-    // gl_FragCoord = vec4({320, 240, 0, 0});
+    // gl_FragCoord = vec4(320, 240, 0, 0);
     // gl_FragCoord /= scale.xy;
     // CHECKN(gl_FragCoord.xy, u_resolution.xy, gl_FragCoord.xy);
 
     // To Be Implemented?
-    // gl_FragCoord = vec4({320, 240, 0, 0});
+    // gl_FragCoord = vec4(320, 240, 0, 0);
     // gl_FragCoord.xy /= scale.xy;
     // CHECKN(gl_FragCoord.xy, u_resolution.xy, gl_FragCoord.xy);
   }
 
   summary();
-#endif  // TEST_SWIZZLE
+#endif // TEST_SWIZZLE
 
   banner("TESTS SUMMARY");
   overall_summary();
