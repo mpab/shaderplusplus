@@ -20,27 +20,27 @@ In the SDL version, S will switch between full screen and windowed mode.
 - macOS
 - Windows (Mingw64)
 
-There are slight variations in configured required for the tested platforms, and I can't test every variation. So if you, Dear Reader, find a platform-related issue, kindly submit feedback via a pull request.
+There are slight variations in configuration required for the tested platforms, and I can't test every variation on every platform. So if you, Dear Reader, find a platform-related issue, kindly submit feedback via a pull request.
 
 ### Highlights
 
-- A basic GLSL API implemented in C++ (enough to run the supplied samples)
-- The C++ GLSL API is similar enough to native GLSL that GLSL code can be run with minimal changes
-- Uses a multi-threaded software renderer which targets a raw ARGB8 buffer
-- The GLSL library is header-only, and can be used separately
+- A basic GLSL API implemented in C++ (enough to run the supplied samples).
+- The C++ GLSL API is similar enough to native GLSL that GLSL code can be run with minimal changes.
+- Uses a multi-threaded software renderer which targets a raw ARGB8 buffer.
+- The GLSL library is header-only, and can be used separately.
 
-The code can be built into three applications
+The code can be built into three applications.
 
-- A Raylib GUI application which can display shaders
-- An SDL GUI application which can display shaders
-- A command-line application which generates PPM data from shader code
+- A Raylib GUI application which can display shaders.
+- An SDL GUI application which can display shaders.
+- A command-line application which generates PPM data from shader code.
 
 ## Building and running using the supplied build scripts
 
 For convenience, I have supplied some pre-baked build scripts.  
 They should work... but no guarantees as my focus is on maintaining the Makefile.  
 The console and raylib applications should build as-is.  
-For the SDL3 gui, see the [SDL note below](#sdl)
+For the SDL3 gui, see the [SDL note below](#sdl).
 
 - for Linux
 
@@ -375,9 +375,7 @@ or haven't copied this font from the ./assets folder.
 1. Create a C++ GLSL Library
 2. ?
 3. Profit
-
-Because I could.
-
+  
 At the very least this can be used to help debug GLSL samples.
 
 ## Inspiration
