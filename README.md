@@ -10,6 +10,10 @@ Inspired by tsoding's [Graphics API is irrelevant](https://www.youtube.com/watch
 
 ![plasma](./docs/plasma.png)
 
+When running the program, ESC or Q Quits.  
+Press a function key to select a shader.  
+In the SDL version, S will switch between full screen and windowed mode.
+
 ### Tested on
 
 - Linux

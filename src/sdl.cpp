@@ -25,6 +25,7 @@ struct AppContext {
   SDL_Texture *texture;
   SDL_FRect texture_rect;
   SDL_AppResult app_quit = SDL_APP_CONTINUE;
+  bool full_screen;
   shfl::threading::Workers render_pool;
   int frame;
   Uint64 ticks_ms;
@@ -96,6 +97,7 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[]) {
                      .renderer = renderer,
                      .texture = texture,
                      .texture_rect = texture_rect,
+                     .full_screen = false,
                      .render_pool = shfl::threading::Workers{num_workers},
                      .frame = 0,
                      .ticks_ms = SDL_GetTicks(),
@@ -123,6 +125,12 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event) {
     app->app_quit = SDL_APP_SUCCESS;
   else if (SDL_SCANCODE_F1 <= kp && kp <= SDL_SCANCODE_F12)
     app->shader_selection = kp - SDL_SCANCODE_F1 + 1;
+  else if (kp == SDL_SCANCODE_S) {
+    if (event->type == SDL_EVENT_KEY_DOWN) {
+      app->full_screen = !app->full_screen;
+      SDL_SetWindowFullscreen(app->window, app->full_screen);
+    }
+  }
 
   return SDL_APP_CONTINUE;
 }
