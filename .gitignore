@@ -4,3 +4,4 @@
 **/.DS_Store
 **/.clang-format
 **/.clangd
+**/compile_commands.json
